@@ -23,9 +23,9 @@ app.use(bodyParser.json())
 // Setting up basic middleware for all Express requests
 app.use(logger('dev')) // Log requests to API using morgan
 
-// app.get('/', function (req, res) {
-//   res.send('Hello! The API is at http://localhost:' + config.port + '/api')
-// })
+app.get('/', function (req, res) {
+  res.send('Hello! The API is at http://localhost:' + config.port + '/api')
+})
 
 router(app)
 
