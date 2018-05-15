@@ -1,0 +1,18 @@
+version: '2'
+
+services: 
+
+  web: 
+    image: docker-sky-message
+    build: .
+    command: node app.js
+    ports:
+      - "3000:3000"
+    links:
+      - "mongo"
+
+  mongo:
+    image: "mongo"
+    ports:
+      - "27017"
+    

@@ -1,0 +1,48 @@
+config:
+  target: 'http://localhost:3000/api'
+  phases:
+    - duration: 10
+      arrivalRate: 10
+      rampTo: 20
+      name: "Warm up applycation"
+  http:
+    pool: 10
+scenarios:
+  - flow:
+    - get:
+        url: "/auth/register"
+        capture:
+          - json: "$.token"
+            as: "token"
+          - json: "$.user.skyNumber"
+            as: "skyNumber"
+          - json: "$.user._id"
+            as: "id"
+    - post:
+        url: "/auth/login"        
+        form:
+          skyNumber: "{{ skyNumber }}"
+          token: "{{ token }}"
+    - post:
+        url: "/chat/new/5ad5b9a944da9920b12da85f"
+        headers:
+          Authorization: "Bearer {{ token }}"
+        form:
+          composedMessage: "Test message {{ id }}"
+        capture:
+          - json: "$.conversationId"
+            as: "conversationId"
+    - get:
+        url: "/chat"
+        headers:
+          Authorization: "Bearer {{ token }}"
+    - get:
+        url: "/chat/{{ conversationId }}"
+        headers:
+          Authorization: "Bearer {{ token }}"
+    - post:
+        url: "/chat/{{ conversationId }}"
+        headers:
+          Authorization: "Bearer {{ token }}"
+        form:
+          composedMessage: "Test reply"  

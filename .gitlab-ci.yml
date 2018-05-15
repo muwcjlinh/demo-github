@@ -1,0 +1,22 @@
+stages:
+  - test
+
+eslint:
+  stage: test
+  image: docker.zinza.com.vn/sysad/docker/js-linter:master
+  tags:
+    - main-docker
+  script: 
+    - npm install -g eslint-plugin-chai-friendly
+    - eslint .
+
+mocha:
+  stage: test
+  image: node:8-alpine
+  services: 
+    - mongo
+  tags: 
+    - main-docker
+  script:
+    - npm install
+    - npm test

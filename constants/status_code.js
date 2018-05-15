@@ -1,0 +1,13 @@
+const OK = 200
+const CREATED = 201
+const UNPROCESSABLE_ENTITY = 422
+const BAD_REQUEST = 400
+const UNAUTHORIZED = 401
+
+module.exports = {
+  OK,
+  CREATED,
+  UNAUTHORIZED,
+  UNPROCESSABLE_ENTITY,
+  BAD_REQUEST
+}
